@@ -1,0 +1,179 @@
+import { useMemo } from "react";
+import { ChartFrame, Txt } from "../core/ChartFrame";
+import { areaPath, nearestIndex, type Curve } from "../core/geometry";
+import { resolveHighlight } from "../core/highlight";
+import type { Mark } from "../core/motion";
+import { midSwatch, swatch, type Swatch } from "../core/palette";
+import { extent, scaleLinear } from "../core/scale";
+import { bucketSeries, prepSeries, type SeriesModel, type XType } from "../core/series";
+import { textWidth } from "../core/text";
+import type { Accessor, BaseChartProps, ChartEvent, Row, TooltipData } from "../core/types";
+import { lazyArray } from "../core/lazy";
+import { useChart, type ChartCtx } from "../core/useChart";
+import { useMotion } from "../core/useMotion";
+import { insideOut, stack } from "../layout/stack";
+import { XAxis, xScaleFor } from "./line";
+import { plural, type ChartLang } from "../core/i18n";
+
+const en = {
+  kind: "Streamgraph",
+  desc: (nS: number, names: string, n: number) => `${plural(nS, "series", "series")} (${names}), ${plural(n, "point")}`,
+};
+const MSG: Record<ChartLang, typeof en> = {
+  en,
+  ko: { kind: "스트림그래프", desc: (nS, names, n) => `계열 ${nS}개(${names}), ${n}개 지점` },
+};
+
+export interface StreamGraphProps<T = Row> extends BaseChartProps<T> {
+  x?: Accessor<T, unknown>;
+  y?: Accessor<T, number> | string[];
+  series?: Accessor<T, string>;
+  xType?: XType;
+  curve?: Curve;
+  /** "wiggle"(기본, 흐름을 부드럽게) | "silhouette"(가운데 대칭) */
+  offset?: "wiggle" | "silhouette";
+  /** 계열 순서를 보기 좋게 다시 정렬. 기본 true */
+  reorder?: boolean;
+}
+
+interface Layer {
+  s: number;
+  name: string;
+  top: number[];
+  bot: number[];
+  sw: Swatch;
+  hi: boolean;
+  label: { x: number; y: number; thick: number } | null;
+}
+
+/** 스트림그래프: 여러 계열의 흐름과 크기 변화 */
+export function StreamGraph<T = Row>(props: StreamGraphProps<T>) {
+  const c = useChart(props, { height: (w) => Math.max(200, Math.min(290, w * 0.48)), duration: 1100, stagger: 60 });
+  const { p, width: W, height: H } = c;
+  const model0 = useMemo(() => prepSeries(props.data, props.x, props.y as never, props.series, { xType: props.xType, locale: c.locale }), [props.data, props.x, props.y, props.series, props.xType, c.locale]);
+  // 폭의 절반보다 점이 많으면 구간 평균으로 줄여요 (층마다 같은 x, 2px에 한 점)
+  const budget = Math.max(40, Math.round(W / 2));
+  const model = useMemo(() => bucketSeries(model0, budget), [model0, budget]);
+  const nS = model.series.length;
+
+  const order = useMemo(() => (props.reorder === false ? model.series.map((_, i) => i) : insideOut(model.values)), [model, props.reorder]);
+  const st = useMemo(() => stack(order.map((s) => model.values[s]), props.offset ?? "wiggle"), [model, order, props.offset]);
+  const hi = useMemo(() => {
+    const totals = model.values.map((r) => r.reduce((a, v) => a + (Number.isFinite(v) ? v : 0), 0));
+    return resolveHighlight(props.highlight as never, model.series as never[], model.series, totals, "max");
+  }, [model, props.highlight]);
+
+  const top = 8;
+  const bottom = 22;
+  const x0 = 4;
+  const x1 = W - 4;
+  const all: number[] = [];
+  st.y0.forEach((r) => r.forEach((v) => all.push(v)));
+  st.y1.forEach((r) => r.forEach((v) => all.push(v)));
+  const [lo, hiV] = extent(all);
+  const y = scaleLinear([lo, hiV], [H - bottom, top]);
+  const xs = xScaleFor(model as SeriesModel<unknown>, x0, x1);
+  const mid = y((lo + hiV) / 2);
+
+  const layers = useMemo<Layer[]>(() => {
+    const rest = order.filter((s) => !hi.has(s));
+    const palette = new Map<number, Swatch>();
+    rest.forEach((s, j) => palette.set(s, rest.length === 1 ? swatch(p, "neutral") : midSwatch(p, 1 - j / Math.max(1, rest.length - 1))));
+    return order.map((s, li) => {
+      const topPx = st.y1[li].map((v) => y(v));
+      const botPx = st.y0[li].map((v) => y(v));
+      let best = -1;
+      let bt = 0;
+      topPx.forEach((t, k) => {
+        const th = botPx[k] - t;
+        const edge = k > 0 && k < topPx.length - 1;
+        if (th > bt && edge) {
+          bt = th;
+          best = k;
+        }
+      });
+      const name = model.series[s];
+      const lw = textWidth(name, 11, 700);
+      const label = best >= 0 && bt >= 15 ? { x: xs(best), y: (topPx[best] + botPx[best]) / 2, thick: bt } : null;
+      const fitsX = label ? label.x - lw / 2 > x0 + 2 && label.x + lw / 2 < x1 - 2 : false;
+      return { s, name, top: topPx, bot: botPx, sw: hi.has(s) ? swatch(p, "accent") : palette.get(s)!, hi: hi.has(s), label: fitsX ? label : null };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order, st, hi, p, H, W, model]);
+
+  const stg = c.motion.stagger ?? 60;
+  const marks = useMemo<Mark<Layer>[]>(
+    () => layers.map((L, k) => ({ key: `l:${L.name}`, to: [...L.top, ...L.bot], from: [...L.top.map(() => mid), ...L.bot.map(() => mid)], delay: k * stg, parts: [L.top.length, L.bot.length], data: L })),
+    [layers, mid, stg],
+  );
+  const m = useMotion(marks, c.motion);
+  const D = c.motion.duration ?? 1100;
+  const curve = props.curve ?? "smooth";
+
+  const fv = c.fv;
+  const events: ChartEvent<T>[] = useMemo(
+    () =>
+      lazyArray(model.keys.length, (k) => ({
+        datum: null,
+        index: k,
+        key: model.keys[k],
+        label: model.labels[k],
+        value: model.values.reduce((a, r) => a + (Number.isFinite(r[k]) ? r[k] : 0), 0),
+        formatted: model.series.map((s, si) => `${s} ${fv(model.values[si][k] || 0)}`).join(", "),
+      })),
+    [model, fv],
+  );
+
+  let tip: TooltipData | null = null;
+  if (c.active !== null && model.keys[c.active] !== undefined) {
+    const k = c.active;
+    const rows = layers
+      .map((L) => ({ L, v: model.values[L.s][k] }))
+      .filter((r) => Number.isFinite(r.v))
+      .sort((a, b) => b.v - a.v)
+      .slice(0, 8)
+      .map((r) => ({ label: r.L.name, value: c.fv(r.v), color: r.L.sw.fill, strong: r.L.hi }));
+    tip = { x: xs(k), y: Math.min(...layers.map((L) => L.top[k])), title: model.labels[k], rows };
+  }
+
+  const msg = MSG[c.lang];
+  const desc = props.description ?? `${msg.kind}. ${msg.desc(nS, model.series.join(", "), model.keys.length)}.`;
+
+  return (
+    <ChartFrame
+      c={c}
+      kind={msg.kind}
+      ariaLabel={props.ariaLabel}
+      description={desc}
+      events={events}
+      tip={tip}
+      renderTip={props.tooltip}
+      className={props.className}
+      style={props.style}
+      theme={props.theme}
+      onPointerMove={(px, _py, e) => c.setActive(nearestIndex(model.keys.map((_, k) => xs(k)), px), e.pointerType === "touch" ? "touch" : "pointer")}
+    >
+      <rect x={x0} y={top} width={x1 - x0} height={H - bottom - top} fill="transparent" />
+      {m.items.map((it) => {
+        const L = it.data;
+        const n = L.top.length;
+        const t = it.v.slice(0, n);
+        const b = it.v.slice(n, 2 * n);
+        const topPts = t.map((v, k) => [xs(k), v] as [number, number]);
+        const botPts = b.map((v, k) => [xs(k), v] as [number, number]);
+        return <path key={it.key} className="ztd-mark" d={areaPath(topPts, botPts, curve)} fill={L.sw.fill} stroke={p.paint("panel")} strokeWidth={1} opacity={it.exiting ? 0.4 : 1} />;
+      })}
+      {c.active !== null ? <line x1={xs(c.active)} x2={xs(c.active)} y1={top} y2={H - bottom} stroke={p.paint("ink")} strokeOpacity={0.55} strokeWidth={1} pointerEvents="none" /> : null}
+      {c.showLabels
+        ? layers.map((L) =>
+            L.label ? (
+              <Txt key={L.name} x={L.label.x} y={L.label.y} anchor="middle" size={11} weight={700} fill={L.sw.text} opacity={m.fade(D * 0.7, 300)}>
+                {L.name}
+              </Txt>
+            ) : null,
+          )
+        : null}
+      <XAxis c={c as ChartCtx<unknown>} model={model as SeriesModel<unknown>} xs={xs} x0={x0} x1={x1} y={H - bottom + 13} />
+    </ChartFrame>
+  );
+}

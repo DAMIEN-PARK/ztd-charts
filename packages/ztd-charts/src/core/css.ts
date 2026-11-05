@@ -1,0 +1,47 @@
+import { darkTheme } from "../theme/tokens";
+
+/** 인라인 스타일로 못 하는 규칙(포커스 링, 전환, 동작 줄이기)만 모은 CSS. 변수가 없으면 기본(다크) 테마 값을 써요 */
+export const baseCss = `
+.ztd-root{position:relative;-webkit-tap-highlight-color:transparent}
+.ztd-root:focus{outline:none}
+.ztd-root:focus-visible{outline:2px solid var(--ztd-accent,${darkTheme.accent});outline-offset:3px;border-radius:6px}
+.ztd-svg{display:block;overflow:visible;user-select:none;-webkit-user-select:none}
+.ztd-mark{transition:opacity .18s ease,fill .18s ease,stroke .18s ease,stroke-width .18s ease}
+.ztd-tip{transition:opacity .12s ease;will-change:transform}
+.ztd-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.ztd-btn{appearance:none;font:inherit;cursor:pointer;transition:background .14s,color .14s,border-color .14s}
+.ztd-btn:focus{outline:none}
+.ztd-btn:focus-visible{outline:2px solid var(--ztd-accent,${darkTheme.accent});outline-offset:2px}
+.ztd-card{transition:border-color .16s ease}
+.ztd-card:hover{border-color:var(--ztd-dim,${darkTheme.dim})}
+@media (prefers-reduced-motion: reduce){.ztd-mark,.ztd-tip,.ztd-btn,.ztd-card{transition:none}}
+@keyframes ztd-pop{from{opacity:0;transform:scale(.45)}to{opacity:1;transform:none}}
+@keyframes ztd-fade{from{opacity:0}to{opacity:1}}
+.ztd-pop{transform-box:fill-box;transform-origin:center}
+@keyframes ztd-pulse{0%,100%{opacity:.55}50%{opacity:1}}
+.ztd-skeleton{animation:ztd-pulse 1.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.ztd-skeleton{animation:none}}
+`;
+
+/**
+ * 칸이 아주 많은 차트(와플, 캘린더)는 등장을 CSS 애니메이션으로 해요. 프레임마다 React가 일하지 않아요.
+ * fill-mode backwards라서 끝난 뒤에는 opacity 속성(호버 흐림)이 그대로 먹어요.
+ */
+export function cssEntrance(enabled: boolean, waiting: boolean, kind: "pop" | "fade", delay: number, duration: number): Record<string, string | number> | undefined {
+  if (!enabled) return undefined;
+  if (waiting) return { opacity: 0 };
+  return { animation: `ztd-${kind} ${Math.round(duration)}ms cubic-bezier(.22,.9,.3,1) ${Math.round(delay)}ms backwards` };
+}
+
+let injected = false;
+
+/** 브라우저에서 한 번만 <style id="ztd-base">를 넣어요 */
+export function ensureBaseStyles(): void {
+  if (injected || typeof document === "undefined") return;
+  injected = true;
+  if (document.getElementById("ztd-base")) return;
+  const el = document.createElement("style");
+  el.id = "ztd-base";
+  el.textContent = baseCss;
+  document.head.appendChild(el);
+}

@@ -1,0 +1,54 @@
+{
+  "name": "ztd-charts",
+  "version": "0.2.0",
+  "description": "33 animated, interactive React charts in pure SVG with zero runtime dependencies, a JSON spec, and CLI and MCP tools for AI agents",
+  "license": "MIT",
+  "author": "Junhan2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Junhan2/ztd-charts.git",
+    "directory": "packages/ztd-charts"
+  },
+  "homepage": "https://charts.ztd.app/",
+  "keywords": ["react", "chart", "svg", "animation", "dataviz", "korean", "mcp"],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+    },
+    "./spec": {
+      "import": { "types": "./dist/spec.d.ts", "default": "./dist/spec.js" },
+      "require": { "types": "./dist/spec.d.cts", "default": "./dist/spec.cjs" }
+    },
+    "./server": {
+      "import": { "types": "./dist/server.d.ts", "default": "./dist/server.js" },
+      "require": { "types": "./dist/server.d.cts", "default": "./dist/server.cjs" }
+    },
+    "./schema.json": "./schema/chart-spec.schema.json",
+    "./schema/*": "./schema/*",
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "schema", "README.md"],
+  "scripts": {
+    "build": "rm -rf dist && tsup && node scripts/write-schema.mjs && node scripts/relative-sourcemaps.mjs",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tsup": "^9.0.0",
+    "typescript": "5.9.3"
+  }
+}

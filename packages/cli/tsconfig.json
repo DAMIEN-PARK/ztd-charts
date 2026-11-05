@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {
+      "ztd-charts": ["../ztd-charts/src/index.ts"],
+      "ztd-charts/spec": ["../ztd-charts/src/spec/index.ts"],
+      "ztd-charts/server": ["../ztd-charts/src/server/index.ts"]
+    }
+  },
+  "include": ["src", "test"]
+}

@@ -1,0 +1,458 @@
+[
+  {
+    "name": "PieChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ PieChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "DonutChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ DonutChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "FunnelChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ FunnelChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "WaffleChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ WaffleChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "Treemap",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ Treemap }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "SunburstChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ SunburstChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "WaterfallChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ WaterfallChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "ParetoChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ ParetoChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "MarimekkoChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ MarimekkoChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "Heatmap",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ Heatmap }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "RadarChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ RadarChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "BubbleChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ BubbleChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "LineChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ LineChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "19.3 KB"
+  },
+  {
+    "name": "AreaChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ AreaChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "19.3 KB"
+  },
+  {
+    "name": "StreamGraph",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ StreamGraph }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "15 KB"
+  },
+  {
+    "name": "BarChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ BarChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "15.3 KB"
+  },
+  {
+    "name": "RadialBarChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ RadialBarChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "GaugeChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ GaugeChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "BulletChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ BulletChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "Sparkline",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ Sparkline }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "SlopeChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ SlopeChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "DumbbellChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ DumbbellChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "LollipopChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ LollipopChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "BeeswarmChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ BeeswarmChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "RidgelineChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ RidgelineChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "SankeyChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ SankeyChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "ChordChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ ChordChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "CalendarHeatmap",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ CalendarHeatmap }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "BumpChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ BumpChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "BoxPlot",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ BoxPlot }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "ParallelCoordinates",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ ParallelCoordinates }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "CandlestickChart",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ CandlestickChart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "16.5 KB"
+  },
+  {
+    "name": "SegmentedBar",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ SegmentedBar }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "13.5 KB"
+  },
+  {
+    "name": "ChartCard + ChartGrid + ThemeProvider",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ ChartCard, ChartGrid, ThemeProvider }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "5 KB"
+  },
+  {
+    "name": "useChartData + parseCSV",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ useChartData, parseCSV }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "3 KB"
+  },
+  {
+    "name": "Chart (spec renderer, all 33)",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "{ Chart }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "63.5 KB"
+  },
+  {
+    "name": "Everything (index.js)",
+    "path": "packages/ztd-charts/dist/index.js",
+    "import": "*",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "80 KB"
+  },
+  {
+    "name": "spec: validateSpec + specSchema",
+    "path": "packages/ztd-charts/dist/spec.js",
+    "import": "{ validateSpec, specSchema }",
+    "ignore": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-dom/server"
+    ],
+    "limit": "19 KB"
+  }
+]

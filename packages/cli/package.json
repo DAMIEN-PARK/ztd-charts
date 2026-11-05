@@ -1,0 +1,44 @@
+{
+  "name": "ztd-charts-cli",
+  "version": "0.2.0",
+  "description": "ztd-charts CLI: list charts, get JSON Schemas, validate specs, render SVG/PNG/HTML, start a project, and get chart suggestions from data",
+  "license": "MIT",
+  "author": "Junhan2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Junhan2/ztd-charts.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://charts.ztd.app/docs/docs/cli/",
+  "type": "module",
+  "bin": {
+    "ztd-charts": "./dist/cli.js"
+  },
+  "main": "./dist/api.js",
+  "types": "./dist/api.d.ts",
+  "exports": {
+    ".": { "types": "./dist/api.d.ts", "default": "./dist/api.js" },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "README.md"],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsup",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "ztd-charts": "workspace:*",
+    "@resvg/resvg-js": "^2.6.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "pretendard": "^1.3.9",
+    "tsup": "^9.0.0",
+    "typescript": "5.9.3"
+  }
+}
